@@ -1,7 +1,13 @@
 package calculator;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Separator {
-    public String setSeparator(String formula) {
+    private String formula;
+
+    public String setSeparator() {
         String customSeparator = "";
         formula = formula.replace("\\n", "\n");
 
@@ -19,22 +25,46 @@ public class Separator {
         }
         return customSeparator;
     }
-    public String[] separate(String formula){
-        String customSeparator = setSeparator(formula);
+    public List<String> separateDefaultSeparator(List<String> numlist){
+        List<String> defaultSeparators = List.of(",", ";");
+        int commaCount = this.formula.length() - this.formula.replace(defaultSeparators.get(0), "").length();
+        int colonCount = this.formula.length() - this.formula.replace(defaultSeparators.get(1), "").length();
+
+        if (commaCount>=1 && colonCount>=1){
+            String[] splitByComma = this.formula.split(defaultSeparators.get(0));
+            for (String comma : splitByComma) {
+                if (comma.contains(defaultSeparators.get(1))) {
+                    String[] splitByColon = comma.split(defaultSeparators.get(1));
+                    List<String> colonList = Arrays.asList(splitByColon);
+                    numlist.addAll(colonList);
+                } else {
+                    numlist.add(comma);
+                }
+            }
+        } else if (commaCount>=1) {
+            String[] numbers = this.formula.split(defaultSeparators.getFirst());
+            numlist = Arrays.asList(numbers);
+        } else if (colonCount>=1) {
+            String[] numbers = this.formula.split(defaultSeparators.get(1));
+            numlist = Arrays.asList(numbers);
+        }
+        return numlist;
+    }
+    public List<String> separate(String formula){
+        this.formula = formula;
         String[] numbers;
+        List<String> numlist = new ArrayList<>();
+        String customSeparator = setSeparator();
 
         // separate using custom separator
         if (!customSeparator.isEmpty()){
-            numbers = formula.split(customSeparator);
+            numbers = this.formula.split(customSeparator);
+            numlist = Arrays.asList(numbers);
         }
         // separate using default separator
         else {
-            String[] numbers1 = formula.split(",");
-            String[] numbers2 = formula.split(";");
-            numbers = new String[numbers1.length + numbers2.length];
-            System.arraycopy(numbers1, 0, numbers,0, numbers1.length);
-            System.arraycopy(numbers2, 0, numbers, numbers1.length, numbers2.length);
+            numlist = separateDefaultSeparator(numlist);
         }
-        return numbers;
+        return numlist;
     }
 }
