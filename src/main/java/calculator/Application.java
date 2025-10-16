@@ -7,6 +7,6 @@ public class Application {
         Separator separator = new Separator();
 
         String formula = Console.readLine();
-        separator.setSeparator(formula);
+        String[] numbers = separator.separate(formula);
     }
 }
