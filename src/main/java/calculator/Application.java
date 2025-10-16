@@ -12,7 +12,12 @@ public class Application {
 
         String formula = Console.readLine();
         List<String> numbers = separator.separate(formula);
-        int total = totalSum.add(numbers);
-        System.out.println(total);
+        try{
+            int total = totalSum.add(numbers);
+            System.out.println(total);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Input only numbers and custom separator.");
+            return;
+        }
     }
 }
