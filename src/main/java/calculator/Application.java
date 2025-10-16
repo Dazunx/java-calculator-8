@@ -14,10 +14,9 @@ public class Application {
         List<String> numbers = separator.separate(formula);
         try{
             int total = totalSum.add(numbers);
-            System.out.println(total);
+            System.out.println("결과 : " + total);
         } catch (IllegalArgumentException e) {
-            System.out.println("Input only numbers and custom separator.");
-            return;
+            throw new IllegalArgumentException();
         }
     }
 }
