@@ -25,7 +25,8 @@ public class Separator {
         }
         return customSeparator;
     }
-    public List<String> separateDefaultSeparator(List<String> numlist){
+    public List<String> separateDefaultSeparator(){
+        List<String> numlist = new ArrayList<>();
         List<String> defaultSeparators = List.of(",", ";");
         int commaCount = this.formula.length() - this.formula.replace(defaultSeparators.get(0), "").length();
         int colonCount = this.formula.length() - this.formula.replace(defaultSeparators.get(1), "").length();
@@ -34,37 +35,27 @@ public class Separator {
             String[] splitByComma = this.formula.split(defaultSeparators.get(0));
             for (String comma : splitByComma) {
                 if (comma.contains(defaultSeparators.get(1))) {
-                    String[] splitByColon = comma.split(defaultSeparators.get(1));
-                    List<String> colonList = Arrays.asList(splitByColon);
-                    numlist.addAll(colonList);
+                    numlist.addAll(Arrays.asList(comma.split(defaultSeparators.get(1))));
                 } else {
                     numlist.add(comma);
                 }
             }
+            return numlist;
         } else if (commaCount>=1) {
-            String[] numbers = this.formula.split(defaultSeparators.get(0));
-            numlist = Arrays.asList(numbers);
-        } else if (colonCount>=1) {
-            String[] numbers = this.formula.split(defaultSeparators.get(1));
-            numlist = Arrays.asList(numbers);
+            return Arrays.asList(this.formula.split(defaultSeparators.get(0)));
+        } else {
+            return Arrays.asList(this.formula.split(defaultSeparators.get(1)));
         }
-        return numlist;
     }
     public List<String> separate(String formula){
         this.formula = formula;
-        String[] numbers;
-        List<String> numlist = new ArrayList<>();
         String customSeparator = setSeparator();
 
-        // separate using custom separator
+        // separate using custom or default separator
         if (!customSeparator.isEmpty()){
-            numbers = this.formula.split(customSeparator);
-            numlist = Arrays.asList(numbers);
+            return Arrays.asList(this.formula.split(customSeparator));
+        } else {
+            return separateDefaultSeparator();
         }
-        // separate using default separator
-        else {
-            numlist = separateDefaultSeparator(numlist);
-        }
-        return numlist;
     }
 }
