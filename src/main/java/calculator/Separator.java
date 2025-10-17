@@ -42,7 +42,7 @@ public class Separator {
                 }
             }
         } else if (commaCount>=1) {
-            String[] numbers = this.formula.split(defaultSeparators.getFirst());
+            String[] numbers = this.formula.split(defaultSeparators.get(0));
             numlist = Arrays.asList(numbers);
         } else if (colonCount>=1) {
             String[] numbers = this.formula.split(defaultSeparators.get(1));
