@@ -21,7 +21,7 @@ public class Separator {
             formula = array[1];
         } else if (frontCount==1 && backCount>1) { // if custom separator is "\n"
             customSeparator = "\n";
-            formula = formula.substring(6);
+            formula = formula.substring(4);
         }
         return customSeparator;
     }

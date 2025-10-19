@@ -9,7 +9,7 @@ public class TotalSum {
             throw new IllegalArgumentException();
         }
         for(String n:numbers){
-            if(n.contains("-") || n.contains(("+"))){
+            if(n.contains("-") || n.contains(("+")) || n.isEmpty()){
                 throw new IllegalArgumentException();
             }
             total += Integer.parseInt(n);
