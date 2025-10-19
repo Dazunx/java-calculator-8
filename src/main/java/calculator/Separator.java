@@ -6,6 +6,7 @@ import java.util.List;
 
 public class Separator {
     private String formula;
+    List<String> defaultSeparators = List.of(",", ";");
 
     public String setSeparator() {
         String customSeparator = "";
@@ -25,14 +26,14 @@ public class Separator {
         }
         return customSeparator;
     }
-    public List<String> separateDefaultSeparator(){
+    public List<String> separateDefaultSeparator(String formula){
         List<String> numlist = new ArrayList<>();
-        List<String> defaultSeparators = List.of(",", ";");
-        int commaCount = this.formula.length() - this.formula.replace(defaultSeparators.get(0), "").length();
-        int colonCount = this.formula.length() - this.formula.replace(defaultSeparators.get(1), "").length();
+
+        int commaCount = formula.length() - formula.replace(defaultSeparators.get(0), "").length();
+        int colonCount = formula.length() - formula.replace(defaultSeparators.get(1), "").length();
 
         if (commaCount>=1 && colonCount>=1){
-            String[] splitByComma = this.formula.split(defaultSeparators.get(0));
+            String[] splitByComma = formula.split(defaultSeparators.get(0));
             for (String comma : splitByComma) {
                 if (comma.contains(defaultSeparators.get(1))) {
                     numlist.addAll(Arrays.asList(comma.split(defaultSeparators.get(1))));
@@ -42,20 +43,29 @@ public class Separator {
             }
             return numlist;
         } else if (commaCount>=1) {
-            return Arrays.asList(this.formula.split(defaultSeparators.get(0)));
+            return Arrays.asList(formula.split(defaultSeparators.get(0)));
         } else {
-            return Arrays.asList(this.formula.split(defaultSeparators.get(1)));
+            return Arrays.asList(formula.split(defaultSeparators.get(1)));
         }
     }
     public List<String> separate(String formula){
         this.formula = formula;
         String customSeparator = setSeparator();
+        List<String> separatedList = new ArrayList<>();
+        List<String> allSeparatedList = new ArrayList<>();
 
         // separate using custom or default separator
         if (!customSeparator.isEmpty()){
-            return Arrays.asList(this.formula.split(customSeparator));
-        } else {
-            return separateDefaultSeparator();
+            separatedList = Arrays.asList(this.formula.split(customSeparator));
+            if (formula.contains(defaultSeparators.get(0)) || formula.contains(defaultSeparators.get(1))){
+                for (String s:separatedList){
+                    allSeparatedList.addAll(separateDefaultSeparator(s));
+                }
+                return allSeparatedList;
+            }
+        } else{
+            return separateDefaultSeparator(formula);
         }
+        return separatedList;
     }
 }
