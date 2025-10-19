@@ -33,6 +33,14 @@ class ApplicationTest extends NsTest {
     }
 
     @Test
+    void 커스텀_구분자_한글자이상_사용() {
+        assertSimpleTest(() -> {
+            run("//--\\n1--4--12");
+            assertThat(output()).contains("결과 : 17");
+        });
+    }
+
+    @Test
     void 예외_테스트() {
         assertSimpleTest(() ->
             assertThatThrownBy(() -> runException("-1,2,3"))
