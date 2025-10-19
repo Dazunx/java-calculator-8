@@ -71,6 +71,14 @@ class ApplicationTest extends NsTest {
         );
     }
 
+    @Test
+    void 구분자만_있는경우_예외_발생() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException("//;\\n;;;"))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
+
     @Override
     public void runMain() {
         Application.main(new String[]{});
