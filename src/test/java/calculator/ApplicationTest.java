@@ -9,6 +9,14 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ApplicationTest extends NsTest {
     @Test
+    void 입력값이_빈경우_0리턴() {
+        assertSimpleTest(() -> {
+            run("");
+            assertThat(output()).contains("결과 : 0");
+        });
+    }
+
+    @Test
     void 기본_구분자_사용() {
         assertSimpleTest(() -> {
             run("1,2;6");
