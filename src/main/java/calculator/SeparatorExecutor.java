@@ -19,7 +19,7 @@ public class SeparatorExecutor {
         // execute separator using custom and default separator
         if (!customSeparator.separator.isEmpty()){
             customSeparatedList = customSeparator.separate(customSeparator.getFormula(), customSeparator.separator);
-            if(defaultSeparator.separator != null) {
+            if(!defaultSeparator.separator.isEmpty()) {
                 for (String c:customSeparatedList){
                     separatedList.addAll(defaultSeparator.separate(c, defaultSeparator.separator));
                 }

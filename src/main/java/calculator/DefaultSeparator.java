@@ -11,7 +11,7 @@ public class DefaultSeparator implements Separator {
         if (formula.contains(separator.get(0)) || formula.contains(separator.get(1))){
             return separator;
         } else {
-            return null;
+            return List.of();
         }
     }
     public List<String> separate(String formula, List<String> separator) {
