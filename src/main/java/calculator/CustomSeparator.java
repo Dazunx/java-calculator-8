@@ -17,15 +17,12 @@ public class CustomSeparator implements Separator {
         if (frontCount>=1 && backCount==1){
             String[] array = formula.split("\n");
             separator.add(array[0].substring(2));
-            updateFormula(array[1]);
+            this.formula = array[1];
         } else if (frontCount==1 && backCount>1) { // if custom separator is "\n"
             separator.add("\n");
-            updateFormula(formula.substring(4));
+            this.formula = formula.substring(4);
         }
         return separator;
-    }
-    public void updateFormula(String formula) {
-        this.formula = formula;
     }
     public String getFormula(){
         return this.formula;
