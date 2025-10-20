@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Application {
     public static void main(String[] args) {
-        Separator separator = new Separator();
+        SeparatorExecutor separator = new SeparatorExecutor();
         TotalSum totalSum = new TotalSum();
         String formula;
 
@@ -16,7 +16,7 @@ public class Application {
             System.out.println("결과 : 0");
             return;
         }
-        List<String> numbers = separator.separate(formula);
+        List<String> numbers = separator.separationExecutor(formula);
         int total = totalSum.add(numbers);
         System.out.println("결과 : " + total);
     }
